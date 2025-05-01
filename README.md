@@ -1,7 +1,7 @@
-# Training: Using GitHub, Terraform/Bicep, and GitHub Copilot
+# Training: Using GitHub, Terraform/Bicep, and GitHub Copilot for Microsoft Cloud Solution Architects
 
 ## Objective
-This training will teach how to:
+This training will teach Microsoft Cloud Solution Architects how to:
 1. Use GitHub as a code repository for collaboration and sharing.
 2. Leverage Terraform and Bicep to deploy simple Azure services.
 3. Use Visual Studio Code (VSCode) and GitHub Copilot to streamline development.
@@ -91,48 +91,61 @@ This training will teach how to:
 ---
 
 ### 3. Deploying Azure Services
-- **Terraform Example**:
-  ```hcl
-  provider "azurerm" {
-    features {}
-  }
+- **Terraform Example (Best Practices):**
+  1. Create a subfolder named `terraform-demo` in your project directory and open it in VSCode.
+  2. Inside `terraform-demo`, create a file named `main.tf` and paste the following code:
+     ```hcl
+     provider "azurerm" {
+       features {}
+     }
 
-  resource "azurerm_storage_account" "example" {
-    name                     = "examplestorageacct"
-    resource_group_name      = "example-rg"
-    location                 = "East US"
-    account_tier             = "Standard"
-    account_replication_type = "LRS"
-  }
-  ```
-  - Run the following commands:
-    ```bash
-    terraform init
-    terraform plan
-    terraform apply
-    ```
-  - **Ask GitHub Copilot Chat**:  
-     - "Can you help me write a Terraform script to deploy an Azure Storage Account?"  
-     - "What are the steps to initialize and apply a Terraform configuration?"
+     resource "azurerm_storage_account" "example" {
+       name                     = "examplestorageacct"
+       resource_group_name      = "example-rg"
+       location                 = "East US"
+       account_tier             = "Standard"
+       account_replication_type = "LRS"
+     }
+     ```
+  3. In the same folder, create a file named `variables.tf` to define variables (optional for this simple example, but recommended for best practices).
+  4. Open a terminal in VSCode, navigate to the `terraform-demo` folder, and run:
+     ```bash
+     terraform init
+     terraform validate
+     terraform plan
+     terraform apply -auto-approve
+     ```
+  5. After deployment, you can view your resources in the [Azure Portal](https://portal.azure.com/).
+  6. **Ask GitHub Copilot Chat**:  
+     - "What files do I need for a basic Terraform project?"  
+     - "How do I use Terraform to deploy an Azure Storage Account?"  
+     - "How do I destroy resources created by Terraform?"
 
-- **Bicep Example**:
-  ```bicep
-  resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
-    name: 'examplestorageacct'
-    location: 'East US'
-    sku: {
-      name: 'Standard_LRS'
-    }
-    kind: 'StorageV2'
-  }
-  ```
-  - Deploy using Azure CLI:
-    ```bash
-    az deployment group create --resource-group example-rg --template-file main.bicep
-    ```
-  - **Ask GitHub Copilot Chat**:  
-     - "Can you help me write a Bicep template to deploy an Azure Storage Account?"  
-     - "What is the Azure CLI command to deploy a Bicep template?"
+- **Bicep Example (Best Practices):**
+  1. Create a subfolder named `bicep-demo` in your project directory and open it in VSCode.
+  2. Inside `bicep-demo`, create a file named `main.bicep` and paste the following code:
+     ```bicep
+     resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
+       name: 'examplestorageacct'
+       location: 'East US'
+       sku: {
+         name: 'Standard_LRS'
+       }
+       kind: 'StorageV2'
+     }
+     ```
+  3. Open a terminal in VSCode, navigate to the `bicep-demo` folder, and run:
+     ```bash
+     az group create --name example-rg --location "East US"
+     az deployment group what-if --resource-group example-rg --template-file main.bicep
+     az deployment group create --resource-group example-rg --template-file main.bicep
+     ```
+  4. After deployment, you can view your resources in the [Azure Portal](https://portal.azure.com/).
+  5. **Ask GitHub Copilot Chat**:  
+     - "How do I deploy a Bicep template using Azure CLI?"  
+     - "How do I parameterize a Bicep template?"
+
+> **Azure Best Practice:** Always use variables and outputs for reusability, validate your templates before deployment, and never hardcode sensitive values. For more, see [Azure Best Practices](https://learn.microsoft.com/en-us/azure/architecture/best-practices/) and [Terraform Style Guide](https://developer.hashicorp.com/terraform/language/style).
 
 ---
 
