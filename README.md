@@ -1,7 +1,7 @@
-# Training: Using GitHub, Terraform/Bicep, and GitHub Copilot for Microsoft Cloud Solution Architects
+# Training: Using GitHub, Terraform/Bicep, and GitHub Copilot
 
 ## Objective
-This training will teach Architects how to:
+This training will teach how to:
 1. Use GitHub as a code repository for collaboration and sharing.
 2. Leverage Terraform and Bicep to deploy simple Azure services.
 3. Use Visual Studio Code (VSCode) and GitHub Copilot to streamline development.
